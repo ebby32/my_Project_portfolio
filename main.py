@@ -26,7 +26,7 @@ EMAIL_PASSWORD = os.environ["EMAIL_PASSWORD"]
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL','sqlite:///site.db')
 app.secret_key = "Just_a_secret_key"
 
 Bootstrap5(app)
