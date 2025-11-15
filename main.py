@@ -10,7 +10,7 @@ from werkzeug.utils import redirect
 from wtforms import StringField, SubmitField
 from wtforms.fields.numeric import IntegerField
 from wtforms.validators import DataRequired, Length
-from flask_bootstrap import Bootstrap5
+from flask_bootstrap5 import Bootstrap
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import smtplib
@@ -26,16 +26,23 @@ EMAIL_PASSWORD = os.environ["EMAIL_PASSWORD"]
 
 app = Flask(__name__)
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL','sqlite:///site.db')
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL','sqlite:///site.db')
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+
+if os.environ.get('FLASK_ENV') == "development":
+    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///site.db"
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
+
+
 app.secret_key = "Just_a_secret_key"
 
-Bootstrap5(app)
+Bootstrap(app)
 
-class Base(DeclarativeBase):
-    pass
-
-db = SQLAlchemy(model_class=Base)
+db = SQLAlchemy()
 db.init_app(app)
+print("DB USED:", app.config['SQLALCHEMY_DATABASE_URI'])
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -46,9 +53,10 @@ def load_user(user_id):
     return db.get_or_404(Users, user_id)
 
 class Users(db.Model, UserMixin):
+    __tablename__ = "users"
     id:Mapped[int] = mapped_column(Integer, primary_key=True)
-    username:Mapped[int] = mapped_column(String(100), nullable = False)
-    password:Mapped[int] = mapped_column(String(100), nullable= False)
+    username:Mapped[str] = mapped_column(String(100), nullable = False)
+    password:Mapped[str] = mapped_column(String(100), nullable= False)
 
 #Admin only decorator, only let the user with the id ==1 access page
 def admin_only(f):
@@ -151,9 +159,9 @@ def add_project():
         return redirect(url_for('home'))
     return render_template('add_project.html', form = form)
 
-#
-# with app.app_context():
-#     db.create_all()
+
+with app.app_context():
+    db.create_all()
 
 @app.route('/view', methods = ['GET','POST'])
 def view():
@@ -175,6 +183,8 @@ def edit_project(project_id):
         project_to_edit.description = request.form.get('description')
         db.session.commit()
     return render_template('edit.html',form = form, project = project_to_edit)
+
+
 
 if __name__ == '__main__':
     app.run(debug=False)
