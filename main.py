@@ -160,8 +160,8 @@ def add_project():
     return render_template('add_project.html', form = form)
 
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 @app.route('/view', methods = ['GET','POST'])
 def view():
