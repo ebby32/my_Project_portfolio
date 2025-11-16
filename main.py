@@ -103,6 +103,7 @@ class ContactMe(FlaskForm):
 @app.route('/login', methods = ['GET','POST'])
 def login():
     check_username = db.session.execute(db.select(Users).where(Users.username == request.form.get('username'))).scalar()
+    print(check_username)
     check_password = db.session.execute(db.select(Users).where(Users.password == request.form.get('password'))).scalar()
     if request.method == 'POST':
         flash('Logged in')
