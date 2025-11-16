@@ -29,6 +29,9 @@ Bootstrap5(app)
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL','sqlite:///site.db')
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
+
+
 
 # if os.environ.get('FLASK_ENV') == "development":
 #     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///site.db"
@@ -44,7 +47,6 @@ app.secret_key = "Just_a_secret_key"
 
 db = SQLAlchemy()
 db.init_app(app)
-
 
 
 login_manager = LoginManager()
@@ -102,7 +104,9 @@ class ContactMe(FlaskForm):
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
-    check_username = db.session.execute(db.select(Users).where(Users.username == request.form.get('username'))).scalar()
+    username = request.form.get('username')
+    print(username)
+    check_username = db.session.execute(db.select(Users).where(Users.username == username)).scalar()
     print(check_username)
     check_password = db.session.execute(db.select(Users).where(Users.password == request.form.get('password'))).scalar()
     if request.method == 'POST':
