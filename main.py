@@ -27,13 +27,13 @@ EMAIL_PASSWORD = os.environ["EMAIL_PASSWORD"]
 app = Flask(__name__)
 Bootstrap5(app)
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL','sqlite:///site.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL','sqlite:///site.db')
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
 
-if os.environ.get('FLASK_ENV') == "development":
-    app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///site.db"
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
+# if os.environ.get('FLASK_ENV') == "development":
+#     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///site.db"
+# else:
+#     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
 
 
 app.secret_key = "Just_a_secret_key"
@@ -53,7 +53,7 @@ def load_user(user_id):
     return db.get_or_404(Users, user_id)
 
 class Users(db.Model, UserMixin):
-    __tablename__ = "users"
+    # __tablename__ = "Users"
     id:Mapped[int] = mapped_column(Integer, primary_key=True)
     username:Mapped[str] = mapped_column(String(100), nullable = False)
     password:Mapped[str] = mapped_column(String(100), nullable= False)
