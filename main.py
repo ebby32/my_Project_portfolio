@@ -10,7 +10,7 @@ from werkzeug.utils import redirect
 from wtforms import StringField, SubmitField
 from wtforms.fields.numeric import IntegerField
 from wtforms.validators import DataRequired, Length
-from flask_bootstrap5 import Bootstrap
+from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash, check_password_hash
 import smtplib
@@ -25,6 +25,7 @@ EMAIL_PASSWORD = os.environ["EMAIL_PASSWORD"]
 
 
 app = Flask(__name__)
+Bootstrap5(app)
 
 # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL','sqlite:///site.db')
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///site.db'
@@ -37,7 +38,6 @@ else:
 
 app.secret_key = "Just_a_secret_key"
 
-Bootstrap(app)
 
 db = SQLAlchemy()
 db.init_app(app)
@@ -187,4 +187,4 @@ def edit_project(project_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)
