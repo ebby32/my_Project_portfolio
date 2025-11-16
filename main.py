@@ -35,13 +35,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL','sqlite:///site.
 # else:
 #     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URL')
 
+class Base(DeclarativeBase):
+    pass
+
 
 app.secret_key = "Just_a_secret_key"
 
 
 db = SQLAlchemy()
 db.init_app(app)
-print("DB USED:", app.config['SQLALCHEMY_DATABASE_URI'])
+
 
 
 login_manager = LoginManager()
@@ -53,7 +56,7 @@ def load_user(user_id):
     return db.get_or_404(Users, user_id)
 
 class Users(db.Model, UserMixin):
-    # __tablename__ = "Users"
+    __tablename__ = "users"
     id:Mapped[int] = mapped_column(Integer, primary_key=True)
     username:Mapped[str] = mapped_column(String(100), nullable = False)
     password:Mapped[str] = mapped_column(String(100), nullable= False)
