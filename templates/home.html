@@ -7,6 +7,14 @@ border-radius: 50%;
 width: 200px;
 height: 200px;
 }
+    body {
+    background-color: #F9E7B2
+    }
+    .flower {
+    border-radius:50%;
+    width: 200px;
+    height: 200px;
+    }
 </style>
 
 {% endblock %}
@@ -16,7 +24,18 @@ height: 200px;
                                              src="/static/images/Evan's_picture.jpg" alt="" width="100"
                                              height="100">
     <h1 class="display-5 fw-bold text-body-emphasis">Personal Projects</h1>
-    <div class="col-lg-6 mx-auto"><p class="lead mb-4">This is my project portfolio website. It contains some of the projects that I have made through my website development journey. These Projects are a mix of websites and scripts. Please enjoy!!</p>
+
+    <div class="d-flex align-items-center justify-content-center">
+
+    <img src="static/images/flower.png" alt="flower" width="100" height="100" class="me-3 flower">
+
+    <p class="lead mb-4 text-start col-lg-6">
+        This is my project portfolio website. It contains some of the projects that I have made through my
+        website development journey. These Projects are a mix of websites and scripts. Please enjoy!!
+    </p>
+
+    <img src="static/images/flower.png" alt="flower" class="ms-3 flower">
+</div>
         <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <a href="{{ url_for('projects') }}"><button type="button" class="btn btn-primary btn-lg px-4 gap-3" fdprocessedid="h3q719">Go to Projects
             </button>
