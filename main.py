@@ -101,20 +101,31 @@ class ContactMe(FlaskForm):
     your_telephone = IntegerField('Telephone Number')
     your_message = StringField('Message')
     send = SubmitField('Send')
+print(app.url_map)
+
+@app.route('/add_user', methods = ['GET', 'POST'])
+def add_user():
+    new_user = Users(
+        username = 'evan',
+        password = '124'
+    )
+    db.session.add(new_user)
+    db.session.commit()
+    return redirect(url_for('home'))
 
 @app.route('/login', methods = ['GET','POST'])
 def login():
-    username = request.form.get('username')
-    print(username)
-    check_username = db.session.execute(db.select(Users).where(Users.username == username)).scalar()
-    print(check_username)
-    check_password = db.session.execute(db.select(Users).where(Users.password == request.form.get('password'))).scalar()
     if request.method == 'POST':
+        username = request.form.get('username')
+        check_username = db.session.execute(db.select(Users).where(Users.username == username)).scalar()
+        print(check_username)
+        print(username)
         flash('Logged in')
         login_user(check_username)
         return redirect(url_for('home'))
 
     return render_template('login.html')
+
 
 @app.route('/logged_out')
 def logout():
@@ -173,7 +184,7 @@ def add_project():
 
 @app.route('/view', methods = ['GET','POST'])
 def view():
-    render_template('view.html')
+    return render_template('view.html')
 
 @app.route('/edit_project/<int:project_id>', methods = ['GET','POST'])
 def edit_project(project_id):
@@ -195,4 +206,4 @@ def edit_project(project_id):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
