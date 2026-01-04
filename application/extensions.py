@@ -4,6 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 
+
 from application.home.models import Users
 
 from flask_bootstrap import Bootstrap5
