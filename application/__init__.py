@@ -18,8 +18,6 @@ def create_app():
     app =  Flask(__name__, instance_relative_config= False)
     app.config.from_object(config.Config)
 
-    with app.app_context():
-        db.create_all()
 
     """Initialize the plugins"""
     db.init_app(app)
@@ -39,6 +37,7 @@ def create_app():
         app.register_blueprint(home_bp)
         app.register_blueprint(projects_bp)
 
+        db.create_all()
 
 
     return app
