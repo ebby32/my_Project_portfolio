@@ -1,0 +1,9 @@
+.section-text {
+margin-top: 50px;
+text-wrap: balance;
+text-align: center;
+}
+
+* {
+font-family: "Lora", serif;
+}
