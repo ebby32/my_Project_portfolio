@@ -8,8 +8,8 @@ from application.projects import projects_bp
 
 @projects_bp.route('/projects', methods = ['GET', 'POST'])
 def projects():
-    data = db.session.execute(db.select(Projects).order_by(Projects.id)).scalars().all()
-    return render_template('projects.html', project_data = data)
+    page = db.paginate(db.select(Projects).order_by(Projects.id), per_page=3)
+    return render_template('projects.html', page = page)
 
 @projects_bp.route('/add_project', methods = ['GET', 'POST'])
 def add_project():

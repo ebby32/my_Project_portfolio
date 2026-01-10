@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block title %} view notes list{% endblock %}
+
+{% block content %}
+
+
+{% for notes in notes_data %}
+
+<a href="{{url_for('notes_bp.notes_content', note_id = notes.id)}}">
+    <ul>
+        <li>{{ notes.id }}. {{ notes.title }}<span style="position: relative; left: 25%">{{ notes.date }}</span> </li>
+    </ul>
+</a>
+
+{% else %}
+
+<li>No projects as yet</li>
+{% endfor %}
+
+{% endblock %}

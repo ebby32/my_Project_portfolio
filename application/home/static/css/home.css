@@ -7,3 +7,17 @@ text-align: center;
 * {
 font-family: "Lora", serif;
 }
+
+.flash {
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  opacity: 1;
+  transition: opacity 0.5s ease;
+  color: red;
+  position: float;
+}
+
+.flash.hide {
+  opacity: 0;
+}

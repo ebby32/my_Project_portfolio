@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% from 'bootstrap5/form.html' import render_form  %}
+
+{% block title %} create notes {% endblock %}
+
+{% block content %}
+
+<div style="" class="top-button">
+    <a style="left: 45%; position :relative;" href="{{url_for('notes_bp.notes_list')}}" class="btn btn-primary my-2">View Notes</a>
+</div>
+
+{{ ckeditor.load() }}
+{{ render_form(form) }}
+
+{% endblock %}

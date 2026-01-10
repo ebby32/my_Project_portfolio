@@ -34,8 +34,8 @@ def login():
         check_password = check_password_hash(check_username.password, password)
 
         if check_username and check_password or check_username and password == check_username.password:
-            flash('Logged in')
             login_user(check_username)
+            flash('Logged in')
         return redirect(url_for('home_bp.home'))
 
     return render_template('login.html')
@@ -53,6 +53,7 @@ def add_user():
 @auth_bp.route('/logged_out')
 def logout():
     logout_user()
+    flash('logged out')
     return render_template('home.html')
 
 
