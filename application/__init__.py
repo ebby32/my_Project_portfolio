@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_migrate import Migrate
+
 from flask_bootstrap import Bootstrap5
 from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
@@ -23,7 +23,7 @@ def create_app():
     app =  Flask(__name__, instance_relative_config= False)
     app.config.from_object(config.Config)
 
-    migrate = Migrate(app,db)
+
 
     """Initialize the plugins"""
     db.init_app(app)
