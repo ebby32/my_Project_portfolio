@@ -23,6 +23,7 @@ def register():
             db.session.add(new_user)
             db.session.commit()
             login_user(new_user)
+            return redirect("home_bp.home")
     return render_template('register.html')
 
 @auth_bp.route("/login", methods = ["GET","POST"])
@@ -40,15 +41,6 @@ def login():
 
     return render_template('login.html')
 
-@auth_bp.route("/add_user", methods = ["GET","POST"])
-def add_user():
-    new_user = Users(
-        username = 'evan',
-        password = '124'
-    )
-    db.session.add(new_user)
-    db.session.commit()
-    return redirect(url_for('home'))
 
 @auth_bp.route('/logged_out')
 def logout():

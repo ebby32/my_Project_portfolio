@@ -13,6 +13,7 @@ from application.notes.forms import ckeditor
 from application.projects import projects_bp
 from application.extensions import login_manager
 from application.notes.models import Notes
+from errors import error_bp
 
 
 #Globally accessible libraries
@@ -24,6 +25,7 @@ def create_app():
     app.config.from_object(config.Config)
 
     migrate = Migrate(app, db)
+
 
     """Initialize the plugins"""
     db.init_app(app)
@@ -48,6 +50,7 @@ def create_app():
         app.register_blueprint(home_bp)
         app.register_blueprint(projects_bp)
         app.register_blueprint(notes_bp)
+        app.register_blueprint(error_bp)
 
 
 

@@ -24,7 +24,7 @@
     </style>
     {% endblock %}
 </head>
-<body>
+<body class="d-flex flex-column min-vh-100">
 <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
     <div class="container-fluid"><a class="navbar-brand" href="{{ url_for('home_bp.home') }}">Evan's Project Portfolios</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
@@ -54,7 +54,10 @@
         </div>
     </div>
 </nav>
-{% block content %}{% endblock %}
+<main class = 'flex-grow-1'>
+    {% block content %}{% endblock %}
+</main>
+
 <footer class="text-center bg-body-tertiary">
     <!-- Grid container -->
     <div class="container pt-4">

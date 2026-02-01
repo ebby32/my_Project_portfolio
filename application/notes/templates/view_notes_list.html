@@ -9,7 +9,7 @@
 
 <a href="{{url_for('notes_bp.notes_content', note_id = notes.id)}}">
     <ul>
-        <li>{{ notes.id }}. {{ notes.title }}<span style="position: relative; left: 25%">{{ notes.date }}</span> </li>
+        <li>{{ notes.id }}. {{ notes.title }}<span style="position: relative; left: 25%">{{ notes.date }}<a href="{{ url_for('notes_bp.edit_note', note_id = notes.id) }}">Edit</a></span> </li>
     </ul>
 </a>
 

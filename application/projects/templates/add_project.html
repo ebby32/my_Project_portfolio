@@ -2,6 +2,8 @@
 {% block title %} Add project {% endblock %}
 {%block content %}
 
-{{ render_form(form) }}
+<h1>Add a new project</h1>
+
+{{ render_form(form, enctype="multipart/form-data") }}
 
 {% endblock %}

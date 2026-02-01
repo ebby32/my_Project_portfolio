@@ -17,9 +17,11 @@ class Users(db.Model, UserMixin):
     __table_args__ = (
         UniqueConstraint('username', name= 'uq_users_username'),
     )
-    id:Mapped[int] = mapped_column(Integer, primary_key=True)
+    id:Mapped[int
+    ] = mapped_column(Integer, primary_key=True)
     username:Mapped[str] = mapped_column(String(100), nullable = False)
     password:Mapped[str] = mapped_column(String(100), nullable= False)
+    role:Mapped[str] = mapped_column(String(100), nullable= False, server_default= 'user')
 
     projects:Mapped[List["Projects"]] = relationship(back_populates="users")
     notes:Mapped[List['Notes']] = relationship(back_populates='users')

@@ -114,6 +114,7 @@
     {% endfor %}
   </div>
 {% endmacro %}
+
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto"><h1 class="fw-light"><font dir="auto"
@@ -133,7 +134,11 @@
                 {% for project in page.items %}
                 <div class="col">
                     <div class="card shadow-sm">
-                        <img src="{{ url_for('projects_bp.static', filename='images/'+project.image) }}" class = 'card-img-top' alt="">
+                        {% if project.image %}
+<!--                        <img src="{{ url_for('projects_bp.static', filename='images/'+project.image) }}" class = 'card-img-top' alt="">-->
+                        <img src="{{ url_for('projects_bp.static', filename='uploads/' ~ project.image) }}" class = 'card-img-top' alt="" width="100px" height="200px">
+                        {% endif %}
+
                         <div class="card-body">
                             <h5 class="card-title">{{ project.project_name }}</h5>
                             <p class="card-text"><font dir="auto"
