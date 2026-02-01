@@ -32,7 +32,7 @@ def add_project():
         # check if the post request has a file part
         if not form.image.data:
             flash('No file part')
-            print('No file part')
+            print('No file parts')
             return redirect(request.url)
         file = form.image.data
         # If the user does not submit a file the browser submits
