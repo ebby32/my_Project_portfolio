@@ -1,6 +1,7 @@
 import os
 
 from flask import render_template, request, redirect, url_for, flash, send_from_directory, current_app
+from sqlalchemy import func
 from werkzeug.utils import secure_filename
 
 from application import db
@@ -26,7 +27,8 @@ def add_project():
             project_name=form.project_name.data,
             image=form.image.data.filename,
             url=form.url.data,
-            description=form.description.data
+            description=form.description.data,
+            status = form.status.data
         )
 
         # check if the post request has a file part
@@ -65,22 +67,25 @@ def edit_project(project_id):
     form = EditProject(obj=project_to_edit)
 
     if form.validate_on_submit():
+        if form.image.data and not isinstance(form.image.data, str):
+            file = form.image.data
+            if file.filename == '':
+                flash('No file selected')
+                print('No file selected')
+                return redirect(request.url)
+            if file and allowed_file(file.filename):
+                # upload_file(file)
+                filename = secure_filename(file.filename)
+                path = os.path.join('application/projects/static/uploads', filename)
+                file.save(path)
+                print("saved")
+
         project_to_edit.project_name = form.project_name.data
-        project_to_edit.image = form.image.data.filename
+        # project_to_edit.image = form.image.data.filename
         project_to_edit.url = form.url.data
         project_to_edit.description = form.description.data
 
-        file = form.image.data
-        if file.filename == '':
-            flash('No file selected')
-            print('No file selected')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            # upload_file(file)
-            filename = secure_filename(file.filename)
-            path = os.path.join('application/projects/static/uploads', filename)
-            file.save(path)
-            print("saved")
+
         db.session.commit()
         return redirect(url_for("projects_bp.projects"))
     return render_template('edit.html', form=form)

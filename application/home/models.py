@@ -35,6 +35,8 @@ class Projects(db.Model):
     image:Mapped[str] = mapped_column(String(120), nullable= False)
     url:Mapped[str] = mapped_column(String(120), nullable= False)
     description:Mapped[str] = mapped_column(String(120), nullable= False)
+    status:Mapped[str] = mapped_column(String(120), nullable= False, server_default= 'draft')
+
 
     user_id:Mapped[int] = mapped_column(ForeignKey("users.id", name= 'fk_projects_user_id'), nullable=True)
     users:Mapped['Users'] = relationship(back_populates='projects')

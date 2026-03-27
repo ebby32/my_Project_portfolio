@@ -2,7 +2,7 @@ from flask import render_template
 from flask import abort
 
 from application import db
-from errors import error_bp
+from application.errors import error_bp
 
 
 @error_bp.app_errorhandler(404)

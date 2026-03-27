@@ -1,19 +1,20 @@
 from flask import Flask
 from flask_migrate import Migrate
-from flask_bootstrap import Bootstrap5
-from flask_ckeditor import CKEditor
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import func
 
 import config
+from application.admin_dash import admin_dash_bp
 from application.auth import auth_bp
 from application.extensions import bootstrap, db
 from application.home import home_bp
+from application.messages import messages_bp
+from application.messages.models import Messages
 from application.notes import notes_bp
 from application.notes.forms import ckeditor
 from application.projects import projects_bp
 from application.extensions import login_manager
 from application.notes.models import Notes
-from errors import error_bp
+from application.errors import error_bp
 
 
 #Globally accessible libraries
@@ -25,6 +26,7 @@ def create_app():
     app.config.from_object(config.Config)
 
     migrate = Migrate(app, db)
+
 
 
     """Initialize the plugins"""
@@ -42,8 +44,11 @@ def create_app():
         from .home import routes
         from .projects import routes
         from .notes import routes
+        from .errors import routes
+        from .admin_dash import routes
+        from .messages import routes
 
-        db.create_all()
+        # db.create_all()
 
         #Register BluePrints
         app.register_blueprint(auth_bp)
@@ -51,8 +56,14 @@ def create_app():
         app.register_blueprint(projects_bp)
         app.register_blueprint(notes_bp)
         app.register_blueprint(error_bp)
+        app.register_blueprint(admin_dash_bp)
+        app.register_blueprint(messages_bp)
 
+    @app.context_processor
+    def inject_unread_count():
+        unread_count = db.session.execute(db.select(func.count()).select_from(Messages).filter_by(is_read=False)).scalar()
 
+        return {"unread_count": unread_count}
 
 
 

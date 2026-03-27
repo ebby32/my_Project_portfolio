@@ -4,8 +4,10 @@ Project Description
 This Website stores all my personal projects and has a link to its GitHub repository. The technologies used in this website are as follows: Python, Html, CSS, Bootstrap and JavaScript.
 
 Features
-* This protfolio website allows you to add your projects in a neat and profesional way. 
+* This portfolio website allows you to add your projects in a neat and profesional way. 
 * Contains an admin login, where you can add new projects, edit and save changes to your existing projects.
+* To access the admin dashboard, (username = evan, password = 123) can be used to gain administrator role.
+* You can also play around with the administrator role.
 
 # How to install
 1.	Clone repository
