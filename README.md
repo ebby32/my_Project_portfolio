@@ -14,7 +14,7 @@ Features
 2.	Open in editor, (optional, create a virtual environment.)
 3.	Install dependencies from requirement.txt 
 pip install -r requirements
-4.	Run application
+4.	Run application.
 
 How to use app.
 This app is straightforward. It is a project portfolio website that stores info about my python and web development projects.
