@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block title %} messages {% endblock %}
+
+{% block content %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Sender</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for message in messages %}
+    <tr
+      data-bs-toggle="modal"
+      data-bs-target="#messageModal"
+      data-id="{{ message.id }}"
+      class="cursor-pointer {% if not message.is_read %}fw-bold{% endif %}">
+
+      <td>{{ message.sender_name }}</td>
+      <td>{{ message.created_at }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<div class="modal fade" id="messageModal" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+const modal = document.getElementById("messageModal")
+
+modal.addEventListener("show.bs.modal", async event => {
+  const row = event.relatedTarget
+  const messageId = row.getAttribute("data-id")
+
+  const bodyEl = document.getElementById("modalBody")
+  bodyEl.innerText = "Loading..."
+
+  try {
+     const response = await fetch(`/messages/${messageId}/read`,{ method: "POST" })
+     const data = await response.json()
+
+     bodyEl.innerText = data.body || "No message content."
+
+    row.classList.remove("fw-bold")
+    row.classList.add("fw-light")
+  } catch (err) {
+    console.error(err)
+    bodyEl.innerText = "Error loading message."
+  }
+
+<!--  // decrement badge-->
+<!--const badge = document.querySelector(".nav-link .badge")-->
+<!--if (badge) {-->
+<!--  let count = parseInt(badge.textContent)-->
+<!--  count = Math.max(0, count - 1)-->
+<!--  if (count === 0) badge.remove()-->
+<!--  else badge.textContent = count-->
+<!--}-->
+})
+</script>
+
+{% endblock %}
+
+
+
+
+
+
+
